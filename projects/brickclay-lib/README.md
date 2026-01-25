@@ -30,7 +30,7 @@ A fully accessible checkbox component with Angular forms integration. Features c
 
 A fully accessible radio button component with Angular forms integration. Features two visual variants (dot and tick), customizable styling, disabled state, keyboard navigation, and seamless integration with both template-driven and reactive forms.
 
-*More components coming soon...*
+_More components coming soon..._
 
 ## Installation
 
@@ -46,6 +46,36 @@ This library requires Angular 20.3.0 or higher:
 npm install @angular/common@^20.3.0 @angular/core@^20.3.0 moment
 ```
 
+### Asset Configuration (Required)
+
+After installing the library, you need to configure your `angular.json` to include the library's assets (icons, etc.). Add the following to your project's `assets` array in the `build` options:
+
+```json
+{
+  "projects": {
+    "your-app-name": {
+      "architect": {
+        "build": {
+          "options": {
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@brickclay-org/ui/assets",
+                "output": "/assets/brickclay-lib/"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+This configuration copies the library's assets (SVG icons, etc.) to your application's output folder during build. Without this, the component icons will not display correctly.
+
 ## Quick Start
 
 ### Standalone Component Usage (Recommended)
@@ -59,10 +89,8 @@ import { CustomCalendarComponent, CalendarSelection } from '@brickclay/ui';
   selector: 'app-my-component',
   imports: [CustomCalendarComponent],
   template: `
-    <brickclay-custom-calendar
-      (selected)="onDateSelected($event)">
-    </brickclay-custom-calendar>
-  `
+    <brickclay-custom-calendar (selected)="onDateSelected($event)"> </brickclay-custom-calendar>
+  `,
 })
 export class MyComponent {
   onDateSelected(selection: CalendarSelection) {
@@ -111,9 +139,10 @@ import { CustomCalendarComponent, CalendarSelection } from '@brickclay/ui';
       [enableTimepicker]="true"
       [showRanges]="true"
       [placeholder]="'Select date range'"
-      (selected)="onDateSelected($event)">
+      (selected)="onDateSelected($event)"
+    >
     </brickclay-custom-calendar>
-  `
+  `,
 })
 export class MyComponent {
   onDateSelected(selection: CalendarSelection) {
@@ -129,34 +158,34 @@ export class MyComponent {
 
 #### Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `enableTimepicker` | `boolean` | `false` | Enable time selection |
-| `autoApply` | `boolean` | `false` | Automatically apply selection when date is chosen |
-| `closeOnAutoApply` | `boolean` | `false` | Close calendar after auto-apply |
-| `showCancel` | `boolean` | `true` | Show cancel button in footer |
-| `singleDatePicker` | `boolean` | `false` | Enable single date selection mode |
-| `dualCalendar` | `boolean` | `false` | Show two calendars side-by-side |
-| `showRanges` | `boolean` | `true` | Show predefined date range buttons |
-| `multiDateSelection` | `boolean` | `false` | Enable multiple date selection |
-| `inline` | `boolean` | `false` | Always show calendar (no dropdown) |
-| `minDate` | `Date` | `undefined` | Minimum selectable date |
-| `maxDate` | `Date` | `undefined` | Maximum selectable date |
-| `placeholder` | `string` | `'Select date range'` | Input placeholder text |
-| `opens` | `'left' \| 'right' \| 'center'` | `'left'` | Dropdown alignment |
-| `drop` | `'up' \| 'down'` | `'down'` | Dropdown direction |
-| `displayFormat` | `string` | `'MM/DD/YYYY'` | Date display format (moment format) |
-| `customRanges` | `Record<string, CalendarRange>` | `undefined` | Custom predefined ranges |
-| `selectedValue` | `CalendarSelection \| null` | `null` | Pre-selected date(s) |
-| `isDisplayCrossIcon` | `boolean` | `true` | Show/hide clear button |
+| Input                | Type                            | Default               | Description                                       |
+| -------------------- | ------------------------------- | --------------------- | ------------------------------------------------- |
+| `enableTimepicker`   | `boolean`                       | `false`               | Enable time selection                             |
+| `autoApply`          | `boolean`                       | `false`               | Automatically apply selection when date is chosen |
+| `closeOnAutoApply`   | `boolean`                       | `false`               | Close calendar after auto-apply                   |
+| `showCancel`         | `boolean`                       | `true`                | Show cancel button in footer                      |
+| `singleDatePicker`   | `boolean`                       | `false`               | Enable single date selection mode                 |
+| `dualCalendar`       | `boolean`                       | `false`               | Show two calendars side-by-side                   |
+| `showRanges`         | `boolean`                       | `true`                | Show predefined date range buttons                |
+| `multiDateSelection` | `boolean`                       | `false`               | Enable multiple date selection                    |
+| `inline`             | `boolean`                       | `false`               | Always show calendar (no dropdown)                |
+| `minDate`            | `Date`                          | `undefined`           | Minimum selectable date                           |
+| `maxDate`            | `Date`                          | `undefined`           | Maximum selectable date                           |
+| `placeholder`        | `string`                        | `'Select date range'` | Input placeholder text                            |
+| `opens`              | `'left' \| 'right' \| 'center'` | `'left'`              | Dropdown alignment                                |
+| `drop`               | `'up' \| 'down'`                | `'down'`              | Dropdown direction                                |
+| `displayFormat`      | `string`                        | `'MM/DD/YYYY'`        | Date display format (moment format)               |
+| `customRanges`       | `Record<string, CalendarRange>` | `undefined`           | Custom predefined ranges                          |
+| `selectedValue`      | `CalendarSelection \| null`     | `null`                | Pre-selected date(s)                              |
+| `isDisplayCrossIcon` | `boolean`                       | `true`                | Show/hide clear button                            |
 
 #### Outputs
 
-| Output | Type | Description |
-|--------|------|-------------|
+| Output     | Type                              | Description                         |
+| ---------- | --------------------------------- | ----------------------------------- |
 | `selected` | `EventEmitter<CalendarSelection>` | Emitted when date selection changes |
-| `opened` | `EventEmitter<void>` | Emitted when calendar opens |
-| `closed` | `EventEmitter<void>` | Emitted when calendar closes |
+| `opened`   | `EventEmitter<void>`              | Emitted when calendar opens         |
+| `closed`   | `EventEmitter<void>`              | Emitted when calendar closes        |
 
 #### Usage Examples
 
@@ -269,11 +298,9 @@ import { ScheduledDatePickerComponent, ScheduledDateSelection } from '@brickclay
 
 @Component({
   template: `
-    <brickclay-scheduled-date-picker
-      [timeFormat]="12"
-      (scheduled)="onScheduled($event)">
+    <brickclay-scheduled-date-picker [timeFormat]="12" (scheduled)="onScheduled($event)">
     </brickclay-scheduled-date-picker>
-  `
+  `,
 })
 export class MyComponent {
   onScheduled(selection: ScheduledDateSelection) {
@@ -293,17 +320,17 @@ export class MyComponent {
 
 #### Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `timeFormat` | `12 \| 24` | `12` | Time format (12-hour or 24-hour) |
-| `enableSeconds` | `boolean` | `false` | Enable seconds in time picker |
+| Input           | Type       | Default | Description                      |
+| --------------- | ---------- | ------- | -------------------------------- |
+| `timeFormat`    | `12 \| 24` | `12`    | Time format (12-hour or 24-hour) |
+| `enableSeconds` | `boolean`  | `false` | Enable seconds in time picker    |
 
 #### Outputs
 
-| Output | Type | Description |
-|--------|------|-------------|
-| `scheduled` | `EventEmitter<ScheduledDateSelection>` | Emitted when selection changes |
-| `cleared` | `EventEmitter<void>` | Emitted when clear button is clicked |
+| Output      | Type                                   | Description                          |
+| ----------- | -------------------------------------- | ------------------------------------ |
+| `scheduled` | `EventEmitter<ScheduledDateSelection>` | Emitted when selection changes       |
+| `cleared`   | `EventEmitter<void>`                   | Emitted when clear button is clicked |
 
 #### Features
 
@@ -328,9 +355,10 @@ import { TimePickerComponent } from '@brickclay/ui';
       [value]="selectedTime"
       [label]="'Start Time'"
       [timeFormat]="12"
-      (timeChange)="onTimeChange($event)">
+      (timeChange)="onTimeChange($event)"
+    >
     </brickclay-time-picker>
-  `
+  `,
 })
 export class MyComponent {
   selectedTime = '1:00 AM';
@@ -348,23 +376,23 @@ export class MyComponent {
 
 #### Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `value` | `string` | `'1:00 AM'` | Current time value (format: "H:MM AM/PM" or "HH:MM") |
-| `label` | `string` | `'Time'` | Label text |
-| `placeholder` | `string` | `'Select time'` | Placeholder text |
-| `position` | `'left' \| 'right'` | `'left'` | Dropdown position |
-| `pickerId` | `string` | `''` | Unique identifier for the picker |
-| `closePicker` | `number` | `0` | Counter to trigger picker close |
-| `timeFormat` | `12 \| 24` | `12` | Time format (12-hour or 24-hour) |
-| `showSeconds` | `boolean` | `false` | Show seconds selector |
+| Input         | Type                | Default         | Description                                          |
+| ------------- | ------------------- | --------------- | ---------------------------------------------------- |
+| `value`       | `string`            | `'1:00 AM'`     | Current time value (format: "H:MM AM/PM" or "HH:MM") |
+| `label`       | `string`            | `'Time'`        | Label text                                           |
+| `placeholder` | `string`            | `'Select time'` | Placeholder text                                     |
+| `position`    | `'left' \| 'right'` | `'left'`        | Dropdown position                                    |
+| `pickerId`    | `string`            | `''`            | Unique identifier for the picker                     |
+| `closePicker` | `number`            | `0`             | Counter to trigger picker close                      |
+| `timeFormat`  | `12 \| 24`          | `12`            | Time format (12-hour or 24-hour)                     |
+| `showSeconds` | `boolean`           | `false`         | Show seconds selector                                |
 
 #### Outputs
 
-| Output | Type | Description |
-|--------|------|-------------|
-| `timeChange` | `EventEmitter<string>` | Emitted when time changes |
-| `pickerOpened` | `EventEmitter<string>` | Emitted when picker opens |
+| Output         | Type                   | Description                |
+| -------------- | ---------------------- | -------------------------- |
+| `timeChange`   | `EventEmitter<string>` | Emitted when time changes  |
+| `pickerOpened` | `EventEmitter<string>` | Emitted when picker opens  |
 | `pickerClosed` | `EventEmitter<string>` | Emitted when picker closes |
 
 #### Features
@@ -379,17 +407,19 @@ export class MyComponent {
 #### Time Format Examples
 
 **12-hour format:**
+
 ```typescript
-value="1:00 AM"
-value="12:30 PM"
-value="11:45 PM"
+value = '1:00 AM';
+value = '12:30 PM';
+value = '11:45 PM';
 ```
 
 **24-hour format:**
+
 ```typescript
-value="01:00"
-value="13:30"
-value="23:45"
+value = '01:00';
+value = '13:30';
+value = '23:45';
 ```
 
 ## 🔘 Toggle
@@ -411,10 +441,11 @@ import { FormsModule } from '@angular/forms';
     <brickclay-toggle
       [(ngModel)]="isEnabled"
       [label]="'Enable notifications'"
-      (change)="onToggleChange($event)">
+      (change)="onToggleChange($event)"
+    >
     </brickclay-toggle>
   `,
-  imports: [ToggleComponent, FormsModule]
+  imports: [ToggleComponent, FormsModule],
 })
 export class MyComponent {
   isEnabled = false;
@@ -431,16 +462,16 @@ export class MyComponent {
 
 #### Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `label` | `string` | `''` | Optional label text displayed next to the toggle |
-| `disabled` | `boolean` | `false` | Disables the toggle interaction |
-| `toggleClass` | `string` | `'toggle-md'` | CSS class for size styling. Options: `'toggle-sm'`, `'toggle-md'`, `'toggle-lg'` |
+| Input         | Type      | Default       | Description                                                                      |
+| ------------- | --------- | ------------- | -------------------------------------------------------------------------------- |
+| `label`       | `string`  | `''`          | Optional label text displayed next to the toggle                                 |
+| `disabled`    | `boolean` | `false`       | Disables the toggle interaction                                                  |
+| `toggleClass` | `string`  | `'toggle-md'` | CSS class for size styling. Options: `'toggle-sm'`, `'toggle-md'`, `'toggle-lg'` |
 
 #### Outputs
 
-| Output | Type | Description |
-|--------|------|-------------|
+| Output   | Type                    | Description                                                   |
+| -------- | ----------------------- | ------------------------------------------------------------- |
 | `change` | `EventEmitter<boolean>` | Emitted when toggle state changes (returns new boolean value) |
 
 #### Features
@@ -462,12 +493,9 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   template: `
-    <brickclay-toggle
-      [(ngModel)]="isActive"
-      [label]="'Active Status'">
-    </brickclay-toggle>
+    <brickclay-toggle [(ngModel)]="isActive" [label]="'Active Status'"> </brickclay-toggle>
   `,
-  imports: [ToggleComponent, FormsModule]
+  imports: [ToggleComponent, FormsModule],
 })
 export class MyComponent {
   isActive = true;
@@ -514,9 +542,10 @@ export class MyComponent {
     <brickclay-toggle
       [(ngModel)]="notificationsEnabled"
       [label]="'Email Notifications'"
-      (change)="onNotificationToggle($event)">
+      (change)="onNotificationToggle($event)"
+    >
     </brickclay-toggle>
-  `
+  `,
 })
 export class MyComponent {
   notificationsEnabled = false;
@@ -540,18 +569,13 @@ import { ToggleComponent } from '@brickclay/ui';
 @Component({
   template: `
     <form [formGroup]="settingsForm">
-      <brickclay-toggle
-        formControlName="darkMode"
-        [label]="'Dark Mode'">
-      </brickclay-toggle>
-      
-      <brickclay-toggle
-        formControlName="notifications"
-        [label]="'Push Notifications'">
+      <brickclay-toggle formControlName="darkMode" [label]="'Dark Mode'"> </brickclay-toggle>
+
+      <brickclay-toggle formControlName="notifications" [label]="'Push Notifications'">
       </brickclay-toggle>
     </form>
   `,
-  imports: [ToggleComponent, ReactiveFormsModule]
+  imports: [ToggleComponent, ReactiveFormsModule],
 })
 export class SettingsComponent {
   settingsForm: FormGroup;
@@ -559,7 +583,7 @@ export class SettingsComponent {
   constructor(private fb: FormBuilder) {
     this.settingsForm = this.fb.group({
       darkMode: [false],
-      notifications: [true]
+      notifications: [true],
     });
   }
 }
@@ -583,6 +607,7 @@ The toggle component uses CSS classes for size variants:
 - **Large**: `toggle-lg` - Width: 44px (w-11)
 
 The component includes built-in styles for:
+
 - On state (green background: `#22973F`)
 - Off state (gray background: `#BBBDC5`)
 - Disabled state (light gray: `#D6D7DC`)
@@ -593,6 +618,7 @@ The component includes built-in styles for:
 #### Accessibility
 
 The toggle component includes:
+
 - `role="switch"` for screen readers
 - `aria-checked` attribute that reflects the current state
 - Keyboard navigation support
@@ -618,10 +644,11 @@ import { FormsModule } from '@angular/forms';
     <brickclay-checkbox
       [(ngModel)]="isAccepted"
       [label]="'I agree to the terms and conditions'"
-      (change)="onCheckboxChange($event)">
+      (change)="onCheckboxChange($event)"
+    >
     </brickclay-checkbox>
   `,
-  imports: [CheckboxComponent, FormsModule]
+  imports: [CheckboxComponent, FormsModule],
 })
 export class MyComponent {
   isAccepted = false;
@@ -638,17 +665,17 @@ export class MyComponent {
 
 #### Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `label` | `string` | `''` | Optional label text displayed next to the checkbox |
-| `disabled` | `boolean` | `false` | Disables the checkbox interaction |
-| `checkboxClass` | `string` | `''` | CSS class for size styling. Options: `'xsm'`, `'sm'`, `'md'`, `'lg'` |
-| `labelClass` | `string` | `''` | Custom CSS classes for the label text |
+| Input           | Type      | Default | Description                                                          |
+| --------------- | --------- | ------- | -------------------------------------------------------------------- |
+| `label`         | `string`  | `''`    | Optional label text displayed next to the checkbox                   |
+| `disabled`      | `boolean` | `false` | Disables the checkbox interaction                                    |
+| `checkboxClass` | `string`  | `''`    | CSS class for size styling. Options: `'xsm'`, `'sm'`, `'md'`, `'lg'` |
+| `labelClass`    | `string`  | `''`    | Custom CSS classes for the label text                                |
 
 #### Outputs
 
-| Output | Type | Description |
-|--------|------|-------------|
+| Output   | Type                    | Description                                                     |
+| -------- | ----------------------- | --------------------------------------------------------------- |
 | `change` | `EventEmitter<boolean>` | Emitted when checkbox state changes (returns new boolean value) |
 
 #### Features
@@ -671,12 +698,9 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   template: `
-    <brickclay-checkbox
-      [(ngModel)]="isChecked"
-      [label]="'Accept terms'">
-    </brickclay-checkbox>
+    <brickclay-checkbox [(ngModel)]="isChecked" [label]="'Accept terms'"> </brickclay-checkbox>
   `,
-  imports: [CheckboxComponent, FormsModule]
+  imports: [CheckboxComponent, FormsModule],
 })
 export class MyComponent {
   isChecked = false;
@@ -734,9 +758,10 @@ export class MyComponent {
     <brickclay-checkbox
       [(ngModel)]="newsletterSubscribed"
       [label]="'Subscribe to newsletter'"
-      (change)="onNewsletterToggle($event)">
+      (change)="onNewsletterToggle($event)"
+    >
     </brickclay-checkbox>
-  `
+  `,
 })
 export class MyComponent {
   newsletterSubscribed = false;
@@ -762,16 +787,15 @@ import { CheckboxComponent } from '@brickclay/ui';
     <form [formGroup]="registrationForm">
       <brickclay-checkbox
         formControlName="acceptTerms"
-        [label]="'I accept the terms and conditions'">
+        [label]="'I accept the terms and conditions'"
+      >
       </brickclay-checkbox>
-      
-      <brickclay-checkbox
-        formControlName="receiveUpdates"
-        [label]="'Receive product updates'">
+
+      <brickclay-checkbox formControlName="receiveUpdates" [label]="'Receive product updates'">
       </brickclay-checkbox>
     </form>
   `,
-  imports: [CheckboxComponent, ReactiveFormsModule]
+  imports: [CheckboxComponent, ReactiveFormsModule],
 })
 export class RegistrationComponent {
   registrationForm: FormGroup;
@@ -779,7 +803,7 @@ export class RegistrationComponent {
   constructor(private fb: FormBuilder) {
     this.registrationForm = this.fb.group({
       acceptTerms: [false, Validators.requiredTrue],
-      receiveUpdates: [false]
+      receiveUpdates: [false],
     });
   }
 }
@@ -804,16 +828,17 @@ export class RegistrationComponent {
         *ngFor="let option of options"
         [(ngModel)]="option.selected"
         [label]="option.label"
-        (change)="onOptionChange(option)">
+        (change)="onOptionChange(option)"
+      >
       </brickclay-checkbox>
     </div>
-  `
+  `,
 })
 export class MyComponent {
   options = [
     { label: 'Option 1', selected: false },
     { label: 'Option 2', selected: false },
-    { label: 'Option 3', selected: false }
+    { label: 'Option 3', selected: false },
   ];
 
   onOptionChange(option: any) {
@@ -834,6 +859,7 @@ The checkbox component supports predefined size classes:
 Use `labelClass` to style the label text (font size, weight, color, etc.)
 
 The component includes built-in styles for:
+
 - Checked state (black background with white checkmark/tick icon)
 - Unchecked state (white background with gray border)
 - Hover states (darker border on hover)
@@ -844,6 +870,7 @@ The component includes built-in styles for:
 #### Accessibility
 
 The checkbox component includes:
+
 - Keyboard navigation support (Enter and Space keys)
 - Focus visible ring for keyboard users
 - Proper ARIA attributes
@@ -870,16 +897,14 @@ import { FormsModule } from '@angular/forms';
       [(ngModel)]="selectedOption"
       [value]="'option1'"
       [label]="'Option 1'"
-      (change)="onRadioChange($event)">
+      (change)="onRadioChange($event)"
+    >
     </brickclay-radio-button>
-    
-    <brickclay-radio-button
-      [(ngModel)]="selectedOption"
-      [value]="'option2'"
-      [label]="'Option 2'">
+
+    <brickclay-radio-button [(ngModel)]="selectedOption" [value]="'option2'" [label]="'Option 2'">
     </brickclay-radio-button>
   `,
-  imports: [RadioComponent, FormsModule]
+  imports: [RadioComponent, FormsModule],
 })
 export class MyComponent {
   selectedOption = 'option1';
@@ -896,19 +921,19 @@ export class MyComponent {
 
 #### Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `label` | `string` | `''` | Optional label text displayed next to the radio button |
-| `value` | `any` | `undefined` | The value associated with this radio button (required for radio groups) |
-| `disabled` | `boolean` | `false` | Disables the radio button interaction |
-| `variant` | `'dot' \| 'tick'` | `'dot'` | Visual variant. `'dot'` shows a filled circle, `'tick'` shows a checkmark |
-| `radioClass` | `string` | `''` | CSS class for size styling. Options: `'xsm'`, `'sm'`, `'md'`, `'lg'` |
-| `labelClass` | `string` | `''` | Custom CSS classes for the label text |
+| Input        | Type              | Default     | Description                                                               |
+| ------------ | ----------------- | ----------- | ------------------------------------------------------------------------- |
+| `label`      | `string`          | `''`        | Optional label text displayed next to the radio button                    |
+| `value`      | `any`             | `undefined` | The value associated with this radio button (required for radio groups)   |
+| `disabled`   | `boolean`         | `false`     | Disables the radio button interaction                                     |
+| `variant`    | `'dot' \| 'tick'` | `'dot'`     | Visual variant. `'dot'` shows a filled circle, `'tick'` shows a checkmark |
+| `radioClass` | `string`          | `''`        | CSS class for size styling. Options: `'xsm'`, `'sm'`, `'md'`, `'lg'`      |
+| `labelClass` | `string`          | `''`        | Custom CSS classes for the label text                                     |
 
 #### Outputs
 
-| Output | Type | Description |
-|--------|------|-------------|
+| Output   | Type                | Description                                               |
+| -------- | ------------------- | --------------------------------------------------------- |
 | `change` | `EventEmitter<any>` | Emitted when radio button is selected (returns the value) |
 
 #### Features
@@ -936,22 +961,17 @@ import { FormsModule } from '@angular/forms';
     <brickclay-radio-button
       [(ngModel)]="selectedPayment"
       [value]="'credit'"
-      [label]="'Credit Card'">
+      [label]="'Credit Card'"
+    >
     </brickclay-radio-button>
-    
-    <brickclay-radio-button
-      [(ngModel)]="selectedPayment"
-      [value]="'debit'"
-      [label]="'Debit Card'">
+
+    <brickclay-radio-button [(ngModel)]="selectedPayment" [value]="'debit'" [label]="'Debit Card'">
     </brickclay-radio-button>
-    
-    <brickclay-radio-button
-      [(ngModel)]="selectedPayment"
-      [value]="'paypal'"
-      [label]="'PayPal'">
+
+    <brickclay-radio-button [(ngModel)]="selectedPayment" [value]="'paypal'" [label]="'PayPal'">
     </brickclay-radio-button>
   `,
-  imports: [RadioComponent, FormsModule]
+  imports: [RadioComponent, FormsModule],
 })
 export class MyComponent {
   selectedPayment = 'credit';
@@ -1038,15 +1058,16 @@ export class MyComponent {
       [(ngModel)]="selectedOption"
       [value]="option.value"
       [label]="option.label"
-      (change)="onOptionChange($event)">
+      (change)="onOptionChange($event)"
+    >
     </brickclay-radio-button>
-  `
+  `,
 })
 export class MyComponent {
   options = [
     { value: 'option1', label: 'Option 1' },
     { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' }
+    { value: 'option3', label: 'Option 3' },
   ];
   selectedOption = 'option1';
 
@@ -1065,33 +1086,24 @@ import { RadioComponent } from '@brickclay/ui';
 @Component({
   template: `
     <form [formGroup]="surveyForm">
-      <brickclay-radio-button
-        formControlName="rating"
-        [value]="'excellent'"
-        [label]="'Excellent'">
+      <brickclay-radio-button formControlName="rating" [value]="'excellent'" [label]="'Excellent'">
       </brickclay-radio-button>
-      
-      <brickclay-radio-button
-        formControlName="rating"
-        [value]="'good'"
-        [label]="'Good'">
+
+      <brickclay-radio-button formControlName="rating" [value]="'good'" [label]="'Good'">
       </brickclay-radio-button>
-      
-      <brickclay-radio-button
-        formControlName="rating"
-        [value]="'fair'"
-        [label]="'Fair'">
+
+      <brickclay-radio-button formControlName="rating" [value]="'fair'" [label]="'Fair'">
       </brickclay-radio-button>
     </form>
   `,
-  imports: [RadioComponent, ReactiveFormsModule]
+  imports: [RadioComponent, ReactiveFormsModule],
 })
 export class SurveyComponent {
   surveyForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.surveyForm = this.fb.group({
-      rating: ['good', Validators.required]
+      rating: ['good', Validators.required],
     });
   }
 }
@@ -1118,16 +1130,17 @@ export class SurveyComponent {
         [(ngModel)]="selectedItem"
         [value]="item.id"
         [label]="item.name"
-        [variant]="item.variant || 'dot'">
+        [variant]="item.variant || 'dot'"
+      >
       </brickclay-radio-button>
     </div>
-  `
+  `,
 })
 export class MyComponent {
   items = [
     { id: 1, name: 'Item 1', variant: 'dot' },
     { id: 2, name: 'Item 2', variant: 'tick' },
-    { id: 3, name: 'Item 3', variant: 'dot' }
+    { id: 3, name: 'Item 3', variant: 'dot' },
   ];
   selectedItem = 1;
 }
@@ -1145,6 +1158,7 @@ The radio button component supports predefined size classes:
 Use `labelClass` to style the label text (font size, weight, color, etc.)
 
 The component includes built-in styles for:
+
 - **Dot Variant**: Filled circle indicator when selected (size varies by radioClass)
 - **Tick Variant**: Checkmark indicator when selected (size varies by radioClass)
 - Unselected state (white background with gray border)
@@ -1156,6 +1170,7 @@ The component includes built-in styles for:
 #### Accessibility
 
 The radio button component includes:
+
 - Keyboard navigation support (Enter and Space keys)
 - Focus visible ring for keyboard users
 - Proper ARIA attributes
@@ -1236,14 +1251,14 @@ export class BookingFormComponent {
   constructor(private fb: FormBuilder) {
     this.bookingForm = this.fb.group({
       checkIn: [null, Validators.required],
-      checkOut: [null, Validators.required]
+      checkOut: [null, Validators.required],
     });
   }
 
   onDateSelected(selection: CalendarSelection) {
     this.bookingForm.patchValue({
       checkIn: selection.startDate,
-      checkOut: selection.endDate
+      checkOut: selection.endDate,
     });
   }
 }
@@ -1270,12 +1285,11 @@ export class DataTableComponent {
   }
 
   loadFilteredData() {
-    const filtered = this.data.filter(item => {
+    const filtered = this.data.filter((item) => {
       if (!this.filterDates.startDate || !this.filterDates.endDate) {
         return true;
       }
-      return item.date >= this.filterDates.startDate! && 
-             item.date <= this.filterDates.endDate!;
+      return item.date >= this.filterDates.startDate! && item.date <= this.filterDates.endDate!;
     });
   }
 }
@@ -1294,6 +1308,7 @@ The calendar components require SVG icons. Configure your `angular.json` to copy
 ```
 
 Or manually copy assets from:
+
 ```
 node_modules/@brickclay/ui/assets/calender/* → your-app/public/assets/calender/
 ```
@@ -1346,6 +1361,7 @@ For issues, feature requests, or contributions, please visit our [GitHub reposit
 ### Version 0.0.1
 
 **Initial Release:**
+
 - ✅ Calendar component suite
   - Single date selection
   - Date range selection
