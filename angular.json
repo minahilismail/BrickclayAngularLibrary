@@ -24,7 +24,7 @@
               {
                 "glob": "**/*",
                 "input": "projects/brickclay-lib/src/assets",
-                "output": "/assets/brickclay-lib/"
+                "output": "/assets/"
               }
             ],
             "styles": ["src/styles.css"]
