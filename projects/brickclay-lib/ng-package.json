@@ -10,6 +10,8 @@
     "src/styles.css",
     "src/lib/toggle/toggle.css",
     "src/lib/checkbox/checkbox.css",
-    "src/lib/radio/radio.css"
+    "src/lib/radio/radio.css",
+    "schematics/**/*.json",
+    "schematics/**/*.js"
   ]
 }

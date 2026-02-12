@@ -1,4 +1,4 @@
-# @brickclay-org/ui
+# Minahil - Angular UI Component Library
 
 A comprehensive Angular UI component library featuring a rich collection of customizable, accessible components. Built with modern Angular standards, this library provides everything you need to build beautiful and functional user interfaces.
 
@@ -6,11 +6,12 @@ A comprehensive Angular UI component library featuring a rich collection of cust
 
 - 📦 **Comprehensive Component Library** - Rich set of UI components for common use cases
 - ♿ **Accessible by Default** - WCAG compliant components with keyboard navigation and screen reader support
-- 🚀 **Angular 20+ Ready** - Built with latest Angular features and standalone components
+- 🚀 **Angular 17-21 Support** - Built with modern Angular features and standalone components
 - 📱 **Responsive Design** - Mobile-first components that work on all screen sizes
 - 🎯 **Type-Safe** - Full TypeScript support with comprehensive type definitions
 - ⚡ **Lightweight** - Tree-shakeable and optimized for performance
 - 🎛️ **Highly Customizable** - Extensive configuration options for every component
+- 🔧 **Easy Setup** - One-command installation with automatic dependency management
 
 ## 📚 Available Components
 
@@ -32,19 +33,48 @@ A fully accessible radio button component with Angular forms integration. Featur
 
 _More components coming soon..._
 
-## Installation
+## 🚀 Quick Start
+
+### Automatic Installation (Recommended)
+
+The easiest way to install Minahil is using Angular CLI's `ng add` command. This automatically installs the library along with matching versions of Angular CDK and other dependencies:
 
 ```bash
-npm i @brickclay-org/ui@0.0.6
+ng add minahil
 ```
 
-### Peer Dependencies
+This will:
 
-This library requires Angular 20.3.0 or higher:
+- ✅ Detect your Angular version (17, 18, 19, 20, or 21)
+- ✅ Install Minahil library
+- ✅ Install matching @angular/cdk version
+- ✅ Install moment.js dependency
+- ✅ Configure everything automatically
+
+### Manual Installation
+
+If you prefer manual installation:
 
 ```bash
-npm install @angular/common@^20.3.0 @angular/core@^20.3.0 moment
+npm install minahil
 ```
+
+**Important:** You must also install peer dependencies that match your Angular version:
+
+```bash
+# For Angular 19 projects
+npm install @angular/cdk@^19.0.0 moment@^2.29.0
+
+# For Angular 17 projects
+npm install @angular/cdk@^17.0.0 moment@^2.29.0
+
+# For Angular 21 projects
+npm install @angular/cdk@^21.0.0 moment@^2.29.0
+```
+
+### Supported Angular Versions
+
+Minahil supports Angular versions **17 through 21**. The library will automatically work with any Angular version in this range.
 
 ### Asset Configuration (Required)
 

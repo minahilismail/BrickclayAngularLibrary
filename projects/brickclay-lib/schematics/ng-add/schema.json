@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "NgAddMinahilSchema",
+  "title": "Minahil Library ng-add Schematic",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Name of the project to add Minahil to.",
+      "$default": {
+        "$source": "projectName"
+      }
+    }
+  }
+}
