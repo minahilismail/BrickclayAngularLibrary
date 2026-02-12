@@ -4,6 +4,7 @@ const path = require('path');
 // Paths
 const compiledSchematicsDir = path.join(__dirname, '../out-tsc/schematics/schematics');
 const sourceSchematicsDir = path.join(__dirname, '../projects/brickclay-lib/schematics');
+const sourcePackageJson = path.join(__dirname, '../projects/brickclay-lib/package.json');
 const destDir = path.join(__dirname, '../dist/brickclay-lib/schematics');
 const distPackageJson = path.join(__dirname, '../dist/brickclay-lib/package.json');
 
@@ -65,6 +66,7 @@ jsonFiles.forEach((file) => {
 // Update package.json to include schematics configuration
 if (fs.existsSync(distPackageJson)) {
   const packageJson = JSON.parse(fs.readFileSync(distPackageJson, 'utf8'));
+  const srcPackageJson = JSON.parse(fs.readFileSync(sourcePackageJson, 'utf8')); // ← Read source
 
   // Add schematic configuration
   packageJson.schematics = './schematics/collection.json';
@@ -74,24 +76,15 @@ if (fs.existsSync(distPackageJson)) {
     save: 'dependencies',
   };
 
-  // Update peer dependencies
-  packageJson.peerDependencies = {
-    '@angular/cdk': '>=17.0.0 <22.0.0',
-    '@angular/common': '>=17.0.0 <22.0.0',
-    '@angular/core': '>=17.0.0 <22.0.0',
-    moment: '^2.29.0',
-  };
+  // ✅ PRESERVE peerDependencies from source package.json (no more hardcoding!)
+  if (srcPackageJson.peerDependencies) {
+    packageJson.peerDependencies = srcPackageJson.peerDependencies;
+  }
 
-  // Mark CDK and moment as optional so npm doesn't auto-install them
-  // The schematic will install the correct versions
-  packageJson.peerDependenciesMeta = {
-    '@angular/cdk': {
-      optional: true,
-    },
-    moment: {
-      optional: true,
-    },
-  };
+  // ✅ PRESERVE peerDependenciesMeta from source package.json
+  if (srcPackageJson.peerDependenciesMeta) {
+    packageJson.peerDependenciesMeta = srcPackageJson.peerDependenciesMeta;
+  }
 
   fs.writeFileSync(distPackageJson, JSON.stringify(packageJson, null, 2));
   console.log('✅ package.json updated with schematic configuration');

@@ -65,21 +65,6 @@ export default function (options: Schema): Rule {
       context.logger.info(`✅ Installing @angular/cdk@${cdkVersion} to match Angular ${majorVersion}`);
     }
 
-    // 5. Check if moment is installed (it's a peer dependency)
-    const existingMoment = getPackageJsonDependency(tree, 'moment');
-    
-    if (!existingMoment) {
-      addPackageJsonDependency(tree, {
-        type: NodeDependencyType.Default,
-        name: 'moment',
-        version: '^2.29.0',
-      });
-      
-      context.logger.info('✅ Installing moment@^2.29.0');
-    } else {
-      context.logger.info(`✅ Using existing moment@${existingMoment.version}`);
-    }
-
     // 6. Schedule npm install
     context.addTask(new NodePackageInstallTask());
 
