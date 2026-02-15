@@ -1,6 +1,6 @@
 {
   "name": "minahil",
-  "version": "0.1.19",
+  "version": "0.1.22",
   "description": "A comprehensive Angular UI component library with calendar, checkbox, radio, and toggle components",
   "schematics": "./schematics/collection.json",
   "ng-add": {

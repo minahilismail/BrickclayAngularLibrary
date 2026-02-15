@@ -12,6 +12,7 @@
     "src/lib/checkbox/checkbox.css",
     "src/lib/radio/radio.css",
     "src/lib/dialog/dialog-container.css",
+    "src/lib/tooltip/tooltip-directive.css",
     "schematics/**/*.json",
     "schematics/**/*.js"
   ]

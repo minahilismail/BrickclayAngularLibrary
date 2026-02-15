@@ -3,7 +3,7 @@
  */
 
 //Icons
-export * from './lib/assets/icons'
+export * from './lib/assets/icons';
 //Library
 export * from './lib/brickclay-lib';
 //Calender
@@ -17,8 +17,7 @@ export * from './lib/toggle/toggle';
 //CheckBox
 export * from './lib/checkbox/checkbox';
 //Radio-Button
-export * from './lib/radio/radio'
-
+export * from './lib/radio/radio';
 
 // 🆕 Dialog system
 export { BkDialogModule } from './lib/dialog/dialog.module';
@@ -34,4 +33,10 @@ export {
   BkDialogClose,
 } from './lib/dialog/dialog-content-directives';
 export type { AnimationKeyframes } from './lib/dialog/dialog-animations';
-export { getDialogPanelAnimation, getDialogBackdropAnimation } from './lib/dialog/dialog-animations';
+export {
+  getDialogPanelAnimation,
+  getDialogBackdropAnimation,
+} from './lib/dialog/dialog-animations';
+
+//Tooltip
+export * from './lib/tooltip/tooltip.directive';
